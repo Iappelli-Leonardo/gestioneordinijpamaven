@@ -21,7 +21,7 @@ public interface ArticoloService {
 
 	public void rimuovi(Articolo articoloInstance) throws Exception;
 
-	public void aggiungiArticolo(Articolo articoloInstance, Categoria categoriaInstance) throws Exception;
+	public void aggiungiCategoria(Articolo articoloInstance, Categoria categoriaInstance) throws Exception;
 
 	public void creaECollegaOrdineEArticolo(Articolo articoloTransientInstance, Categoria categoriaTransientInstance)
 			throws Exception;

@@ -145,7 +145,7 @@ public class OrdineServiceImpl implements OrdineService {
 	}
 
 	@Override
-	public void aggiungiOrdine(Ordine ordineInstance, Articolo articoloInstance) throws Exception {
+	public void aggiungiArticolo(Ordine ordineInstance, Articolo articoloInstance) throws Exception {
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
@@ -160,9 +160,10 @@ public class OrdineServiceImpl implements OrdineService {
 			articoloInstance = entityManager.merge(articoloInstance);
 			// attenzione che genereInstance deve essere già presente (lo verifica dall'id)
 			// se così non è viene lanciata un'eccezione
-			articoloInstance = entityManager.merge(articoloInstance);
+			ordineInstance = entityManager.merge(ordineInstance);
 
 			ordineInstance.getArticoli().add(articoloInstance);
+			articoloInstance.setOrdine(ordineInstance);
 			// l'update non viene richiamato a mano in quanto
 			// risulta automatico, infatti il contesto di persistenza
 			// rileva che cdInstance ora è dirty vale a dire che una sua

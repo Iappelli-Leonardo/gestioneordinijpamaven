@@ -145,7 +145,7 @@ public class ArticoloServiceImpl implements ArticoloService {
 	}
 
 	@Override
-	public void aggiungiArticolo(Articolo articoloInstance, Categoria categoriaInstance) throws Exception {
+	public void aggiungiCategoria(Articolo articoloInstance, Categoria categoriaInstance) throws Exception {
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
@@ -178,48 +178,48 @@ public class ArticoloServiceImpl implements ArticoloService {
 			EntityManagerUtil.closeEntityManager(entityManager);
 		}
 
-
 	}
 
 	@Override
-	public void creaECollegaOrdineEArticolo(Articolo ordineTransientInstance, Categoria categoriaTransientInstance) throws Exception  {
-	EntityManager entityManager = EntityManagerUtil.getEntityManager();
+	public void creaECollegaOrdineEArticolo(Articolo ordineTransientInstance, Categoria categoriaTransientInstance)
+			throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
-	try {
-		// questo è come il MyConnection.getConnection()
-		entityManager.getTransaction().begin();
+		try {
+			// questo è come il MyConnection.getConnection()
+			entityManager.getTransaction().begin();
 
-		// uso l'injection per il dao
-		articoloDao.setEntityManager(entityManager);
+			// uso l'injection per il dao
+			articoloDao.setEntityManager(entityManager);
 
-		// collego le due entità: questa cosa funziona grazie al fatto che ho
-		// CascadeType.PERSIST, CascadeType.MERGE dentro l'owner della relazione (Cd in
-		// questo caso)
-		ordineTransientInstance.getCategorie().add(categoriaTransientInstance);
+			// collego le due entità: questa cosa funziona grazie al fatto che ho
+			// CascadeType.PERSIST, CascadeType.MERGE dentro l'owner della relazione (Cd in
+			// questo caso)
+			ordineTransientInstance.getCategorie().add(categoriaTransientInstance);
 
-		// ********************** IMPORTANTE ****************************
-		// se io rimuovo i cascade, non funziona più e si deve prima salvare il genere
-		// (tramite genereDAO iniettando anch'esso) e poi
-		// sfruttare i metodi addTo o removeFrom dentro Cd:
-		// GenereDAO genereDAO = MyDaoFactory.getGenereDAOInstance();
-		// genereDAO.setEntityManager(entityManager);
-		// genereDAO.insert(genereTransientInstance);
-		// cdTransientInstance.addToGeneri(genereTransientInstance);
-		// in questo caso però se il genere è già presente non ne tiene conto e
-		// inserirebbe duplicati, ma è logico
-		// ****************************************************************
+			// ********************** IMPORTANTE ****************************
+			// se io rimuovo i cascade, non funziona più e si deve prima salvare il genere
+			// (tramite genereDAO iniettando anch'esso) e poi
+			// sfruttare i metodi addTo o removeFrom dentro Cd:
+			// GenereDAO genereDAO = MyDaoFactory.getGenereDAOInstance();
+			// genereDAO.setEntityManager(entityManager);
+			// genereDAO.insert(genereTransientInstance);
+			// cdTransientInstance.addToGeneri(genereTransientInstance);
+			// in questo caso però se il genere è già presente non ne tiene conto e
+			// inserirebbe duplicati, ma è logico
+			// ****************************************************************
 
-		// inserisco il cd
-		articoloDao.insert(ordineTransientInstance);
+			// inserisco il cd
+			articoloDao.insert(ordineTransientInstance);
 
-		entityManager.getTransaction().commit();
-	} catch (Exception e) {
-		entityManager.getTransaction().rollback();
-		e.printStackTrace();
-		throw e;
-	} finally {
-		EntityManagerUtil.closeEntityManager(entityManager);
-	}
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override

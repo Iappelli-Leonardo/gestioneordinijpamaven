@@ -224,6 +224,7 @@ public class TestGestioniordinijpamaven {
 			
 			categoriaServiceInstance.inserisciNuovo(categoriaX);
 			
+			
 
 			articoloServiceInstance.creaECollegaOrdineEArticolo(articoloInstanceX, categoriaX);
 
@@ -243,13 +244,15 @@ public class TestGestioniordinijpamaven {
 			Ordine ordineReloaded = ordineServiceInstance.caricaSingoloElemento(ordineX.getId());
 			if (ordineReloaded.getArticoli() == null)
 				throw new RuntimeException(
-						"testCreazioneCategoriaECollegamentoArticoloInUnSoloColpo fallito: genere e articolo non collegati ");
+						"testCreazioneCategoriaECollegamentoArticoloInUnSoloColpo fallito: categoria e articolo non collegati ");
 
+			articoloServiceInstance.aggiungiCategoria(articoloInstanceX, categoriaX);
+			
 			Articolo articoloReloaded = articoloServiceInstance
 					.caricaSingoloElementoEagerCategorie(articoloInstanceX.getId());
 			if (articoloReloaded.getCategorie().isEmpty())
 				throw new RuntimeException(
-						"testCreazioneCategoriaECollegamentoArticoloInUnSoloColpo fallito: genere e articolo non collegati ");
+						"testCreazioneCategoriaECollegamentoArticoloInUnSoloColpo fallito: categoria e articolo non collegati ");
 
 			System.out.println(
 					"#################### testCreazioneCategoriaECollegamentoArticoloInUnSoloColpo fine: PASSED ####################");
