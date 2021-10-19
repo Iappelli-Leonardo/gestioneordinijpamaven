@@ -111,8 +111,7 @@ public class TestGestioniordinijpamaven {
 			CategoriaService categoriaServiceInstance = MyServiceFactory.getCategoriaServiceInstance();
 
 			try {
-				System.out.println(
-						"********** inizio batteria di test ****************");
+				
 				System.out.println(
 						"*********************************");
  				testInserimentoNuovoOrdine(ordineServiceInstance);
@@ -124,8 +123,7 @@ public class TestGestioniordinijpamaven {
 				testCreazioneCategoriaArticoloOrdineInUnColpo(ordineServiceInstance, articoloServiceInstance,
 						categoriaServiceInstance);
 				System.out.println();
-				System.out.println(
-						"********** fine batteria di test ****************");
+	
 				System.out.println(
 						"*********************************");
 			} catch (Exception e) {
@@ -144,7 +142,7 @@ public class TestGestioniordinijpamaven {
 			System.out.println("######################## testInserimentoNuovoOrdine inizio ########################");
 
 //			creo un nuovo ordine
-			Ordine ordineInstance = new Ordine("Silvano", "VIA TUSCOLANA");
+			Ordine ordineInstance = new Ordine("peppe", "via lombardi 11");
 
 //		 	inserisco l'ordine e controllo che sia stato inserito
 
@@ -223,6 +221,9 @@ public class TestGestioniordinijpamaven {
 			articoloInstanceX.setOrdine(ordineX);
 
 			Categoria categoriaX = new Categoria("Categoria 1");
+			
+			categoriaServiceInstance.inserisciNuovo(categoriaX);
+			
 
 			articoloServiceInstance.creaECollegaOrdineEArticolo(articoloInstanceX, categoriaX);
 
@@ -236,7 +237,7 @@ public class TestGestioniordinijpamaven {
 
 			if (categoriaX.getId() == null)
 				throw new RuntimeException(
-						"testCreazioneCategoriaECollegamentoArticoloInUnSoloColpo fallito: genere non inserito ");
+						"testCreazioneCategoriaECollegamentoArticoloInUnSoloColpo fallito: categoria non inserito ");
 
 			// ricarico eager per forzare il test
 			Ordine ordineReloaded = ordineServiceInstance.caricaSingoloElemento(ordineX.getId());

@@ -71,7 +71,7 @@ public class ArticoloServiceImpl implements ArticoloService {
 	}
 
 	@Override
-	public void aggiorna(Articolo cdInstance) throws Exception {
+	public void aggiorna(Articolo articoloInstance) throws Exception {
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
@@ -82,7 +82,7 @@ public class ArticoloServiceImpl implements ArticoloService {
 			articoloDao.setEntityManager(entityManager);
 
 			// eseguo quello che realmente devo fare
-			articoloDao.update(cdInstance);
+			articoloDao.update(articoloInstance);
 
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
