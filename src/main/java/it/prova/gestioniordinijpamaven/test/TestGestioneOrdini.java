@@ -42,7 +42,12 @@ public class TestGestioneOrdini {
 
 			testRimozioneArticoloECheckCategoria(articoloServiceInstance, categoriaServiceInstance);
 
-			testStampaOrdiniPerUnaCategoria(articoloServiceInstance, categoriaServiceInstance, ordineServiceInstance);
+//			testCalcolaSommaByArticoloDiCategoria(articoloServiceInstance, categoriaServiceInstance,
+//					ordineServiceInstance);
+//
+//			testCercaTuttiByOrdineArticolo(articoloServiceInstance, categoriaServiceInstance, ordineServiceInstance);
+//
+//			testStampaOrdiniPerUnaCategoria(articoloServiceInstance, categoriaServiceInstance, ordineServiceInstance);
 
 		
 			System.out.println("In tabella Genere ci sono " + categoriaServiceInstance.listAll().size() + " elementi.");
@@ -232,6 +237,34 @@ public class TestGestioneOrdini {
 		System.out.println(".......testStampaOrdiniPerUnaCategoria fine: PASSED.............");
 	}
 
+	private static void testCercaTuttiByOrdineArticolo(ArticoloService articoloServiceInstance,
+			CategoriaService categoriaServiceInstance, OrdineService ordineServiceInstance) throws Exception {
+		System.out.println(".......testCercaTuttiByOrdineArticolo inizio.............");
 
+		long nowInMillisecondi = new Date().getTime();
+		Articolo articoloInstanceX = new Articolo("Samsumg" + nowInMillisecondi, 500);
+		articoloServiceInstance.inserisciNuovo(articoloInstanceX);
+		Categoria categoria1 = new Categoria("PC" + nowInMillisecondi);
+		categoriaServiceInstance.inserisciNuovo(categoria1);
+		articoloServiceInstance.aggiungiCategoria(articoloInstanceX, categoria1);
+		Ordine ordineInstance = new Ordine("Filippo", "Roma Sud");
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
+		ordineServiceInstance.aggiungiArticolo(ordineInstance, articoloInstanceX);
 
+		System.out.println(".......testCercaTuttiByOrdineArticolo fine: PASSED.............");
+	}
+
+	private static void testCalcolaSommaByArticoloDiCategoria(ArticoloService articoloServiceInstance,
+			CategoriaService categoriaServiceInstance, OrdineService ordineServiceInstance) throws Exception {
+		System.out.println(".......testCalcolaSommaByArticoloDiCategoria inizio.............");
+
+		long nowInMillisecondi = new Date().getTime();
+		Articolo articoloInstanceX = new Articolo("Samsumg" + nowInMillisecondi, 500);
+		articoloServiceInstance.inserisciNuovo(articoloInstanceX);
+		Categoria categoria1 = new Categoria("PC" + nowInMillisecondi);
+		categoriaServiceInstance.inserisciNuovo(categoria1);
+		articoloServiceInstance.aggiungiCategoria(articoloInstanceX, categoria1);
+
+		System.out.println(".......testCalcolaSommaByArticoloDiCategoria fine: PASSED.............");
+	}
 }
